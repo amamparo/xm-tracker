@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "beatport-to-tidal"
+version = "0.0.1"
+description = ""
+authors = ["Aaron Mamparo <aaronmamparo@gmail.com>"]
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+beautifulsoup4 = "^4.12.2"
+requests = "^2.31.0"
+fake-useragent = "^1.4.0"
+python-dotenv = "^1.0.0"
+tidal-dl = "^2022.10.31.1"
+tqdm = "^4.66.1"
+fuzzywuzzy = "^0.18.0"
+python-levenshtein = "^0.23.0"
+ujson = "^5.9.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^2.17.4"
+pylint-quotes = "^0.2.3"
+aws-cdk-lib = "^2.116.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
