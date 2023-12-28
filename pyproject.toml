@@ -8,15 +8,17 @@ packages = [{include = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-beautifulsoup4 = "^4.12.2"
 requests = "^2.31.0"
 fake-useragent = "^1.4.0"
 python-dotenv = "^1.0.0"
-tidal-dl = "^2022.10.31.1"
 tqdm = "^4.66.1"
-fuzzywuzzy = "^0.18.0"
-python-levenshtein = "^0.23.0"
 ujson = "^5.9.0"
+flask = "^3.0.0"
+flask-cors = "^4.0.0"
+aws-wsgi = "^0.2.7"
+boto3 = "^1.34.9"
+injector = "^0.21.0"
+flask-injector = "^0.15.0"
 
 
 [tool.poetry.group.dev.dependencies]

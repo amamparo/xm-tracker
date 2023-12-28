@@ -1,8 +1,14 @@
 install:
 	poetry install
 
-sirius_xm_stations:
-	poetry run python -m src.scrape_sirius_xm_stations
+stations:
+	poetry run python -m src.scrape_stations
+
+now_playing:
+	poetry run python -m src.scrape_now_playing
+
+top_tracks_api:
+	poetry run python -m src.stop_tracks_api
 
 token:
 	poetry run python -m src.create_tidal_token
@@ -14,4 +20,4 @@ test:
 	poetry run python -m unittest discover -s 'tests' -p '*.py'
 
 deploy:
-	cdk deploy --require-approval never --verbose
+	cdk deploy --require-approval never

@@ -1,0 +1,6 @@
+cdk.out
+.localbucket
+.github
+.idea
+tests
+aws
