@@ -4,3 +4,4 @@ cdk.out
 .idea
 tests
 aws
+.env
