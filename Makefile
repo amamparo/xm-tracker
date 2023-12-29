@@ -8,7 +8,7 @@ now_playing:
 	poetry run python -m src.scrape_now_playing
 
 top_tracks_api:
-	poetry run python -m src.stop_tracks_api
+	poetry run python -m src.top_tracks_api.main
 
 token:
 	poetry run python -m src.create_tidal_token
@@ -21,3 +21,6 @@ test:
 
 deploy:
 	cdk deploy --require-approval never
+
+sync:
+	./sync_s3.sh

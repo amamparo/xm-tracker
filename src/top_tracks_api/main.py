@@ -1,8 +1,10 @@
 import logging
 import traceback
+from datetime import datetime, timedelta
+from typing import Tuple, Dict, List
 
 import awsgi
-from flask import Flask, Response, jsonify
+from flask import Flask, Response, jsonify, request
 from flask_cors import CORS
 from flask_injector import FlaskInjector
 from injector import inject
@@ -31,10 +33,30 @@ def __channels(bucket: Bucket):
 
 
 @inject
-@app.route('/channel/<channel_id>')
+@app.route('/top-tracks/<channel_id>')
 def __channel(bucket: Bucket, channel_id: str):
+    days_back = int(request.args.get('days-back', 7))
     plays = bucket.read_lines(f'play_history/{channel_id}.jsonl')
-    return jsonify(plays)
+    earliest_date_iso = (datetime.utcnow() - timedelta(days=days_back)).isoformat()
+    plays = [x for x in plays if x['at'] >= earliest_date_iso]
+    grouped: Dict[Tuple[str, str], List[dict]] = {}
+    for track in plays:
+        key = (track['artist'], track['title'])
+        if key not in grouped:
+            grouped[key] = []
+        grouped[key] = grouped.get(key, []) + [track]
+
+    tracks = []
+    for group in grouped.values():
+        first_track = group[0]
+        tracks.append({
+            'artist': first_track['artist'],
+            'title': first_track['title'],
+            'plays': len(group),
+            'last_played_at': sorted([x['at'] for x in group])[-1]
+        })
+
+    return jsonify(sorted(tracks, key=lambda t: (t['plays'], t['last_played_at']), reverse=True))
 
 
 @inject
