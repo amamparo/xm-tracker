@@ -71,7 +71,7 @@ class XmTracker(Stack):
             ),
             handler=self.__create_function(
                 'top-tracks-api',
-                'src.top_tracks_api.main.lambda_handler',
+                'src.top_tracks_api.lambda_handler',
                 environment=environment,
                 role=role
             )

@@ -8,7 +8,7 @@ now_playing:
 	poetry run python -m src.scrape_now_playing
 
 top_tracks_api:
-	poetry run python -m src.top_tracks_api.main
+	poetry run python -m src.top_tracks_api
 
 token:
 	poetry run python -m src.create_tidal_token

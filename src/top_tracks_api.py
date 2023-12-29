@@ -17,26 +17,22 @@ CORS(app)
 
 
 @inject
-@app.route('/channels')
-def __channels(bucket: Bucket):
-    channels = sorted(bucket.read_lines('channels.jsonl'), key=lambda x: x['title'])
-    genres = set(x['genre'] for x in channels)
-    return jsonify({'genres': {
-        genre: [
-            {
-                'id': x['id'],
-                'title': x['title']
-            } for x in channels if x['genre'] == genre
-        ]
-        for genre in genres
-    }})
+@app.route('/stations')
+def __stations(bucket: Bucket):
+    return jsonify([
+        {
+            'id': x['id'],
+            'title': x['title'],
+            'genre': x['genre']
+        } for x in sorted(bucket.read_lines('channels.jsonl'), key=lambda x: (x['genre'], x['title']))
+    ])
 
 
 @inject
-@app.route('/top-tracks/<channel_id>')
-def __channel(bucket: Bucket, channel_id: str):
+@app.route('/top-tracks/<station_id>')
+def __channel(bucket: Bucket, station_id: str):
     days_back = int(request.args.get('days-back', 7))
-    plays = bucket.read_lines(f'play_history/{channel_id}.jsonl')
+    plays = bucket.read_lines(f'play_history/{station_id}.jsonl')
     earliest_date_iso = (datetime.utcnow() - timedelta(days=days_back)).isoformat()
     plays = [x for x in plays if x['at'] >= earliest_date_iso]
     grouped: Dict[Tuple[str, str], List[dict]] = {}
