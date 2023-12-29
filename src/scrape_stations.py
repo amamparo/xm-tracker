@@ -33,7 +33,12 @@ def main(bucket: Bucket):
         if channel_id not in lookaround_ids:
             continue
 
-        channels.append({'id': channel_id, 'title': channel['displayName'], 'genre': channel['genreTitle']})
+        channels.append({
+            'id': channel_id,
+            'title': channel['displayName'],
+            'genre': channel['genreTitle'],
+            'description': channel['longDescription']
+        })
 
     bucket.write_lines('channels.jsonl', channels)
 

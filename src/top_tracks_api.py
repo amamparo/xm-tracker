@@ -23,6 +23,7 @@ def __stations(bucket: Bucket):
         {
             'id': x['id'],
             'title': x['title'],
+            'description': x['description'],
             'genre': x['genre']
         } for x in sorted(bucket.read_lines('channels.jsonl'), key=lambda x: (x['genre'], x['title']))
     ])
