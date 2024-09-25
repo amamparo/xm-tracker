@@ -28,7 +28,9 @@ def main(bucket: Bucket):
             headers={
                 'User-Agent': UserAgent().chrome
             }
-        ).headers['Location']
+        ).headers.get('Location')
+        if not redirect_location:
+            continue
         channel_id = redirect_location.split('/')[-1].split('?')[0]
         if channel_id not in lookaround_ids:
             continue
